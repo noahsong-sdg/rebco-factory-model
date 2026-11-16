@@ -1,0 +1,102 @@
+{
+  "scenario_name": "Illustrative route-agnostic baseline",
+  "reference_condition": "Synthetic example: 20 K, 20 T, B parallel to c-axis, stated Ic values only",
+  "evidence_notice": "Every numerical factory input in this scenario is an E-class synthetic teaching assumption, not MetOx or vendor data.",
+  "factory": {
+    "scheduled_hours_per_year": 8000,
+    "slit_lanes": 3,
+    "master_width_mm": 12,
+    "slit_tape_width_mm": 4,
+    "slitting_length_yield": 0.97,
+    "annual_overhead_cost": 6000000,
+    "downstream_variable_cost_per_tape_m": 3.5,
+    "order_length_m": 500
+  },
+  "steps": [
+    {
+      "name": "substrate_and_surface",
+      "nominal_web_speed_m_per_hour": 140,
+      "parallel_lines": 1,
+      "availability": 0.9,
+      "performance_rate": 0.9,
+      "independent_retention": 0.99,
+      "fixed_annual_cost": 1200000,
+      "variable_cost_per_master_m": 7.0,
+      "evidence": "E"
+    },
+    {
+      "name": "texture_and_buffers",
+      "nominal_web_speed_m_per_hour": 90,
+      "parallel_lines": 1,
+      "availability": 0.84,
+      "performance_rate": 0.88,
+      "independent_retention": 0.98,
+      "fixed_annual_cost": 4200000,
+      "variable_cost_per_master_m": 13.0,
+      "evidence": "E"
+    },
+    {
+      "name": "rebco_growth",
+      "nominal_web_speed_m_per_hour": 75,
+      "parallel_lines": 1,
+      "availability": 0.8,
+      "performance_rate": 0.85,
+      "independent_retention": 0.94,
+      "fixed_annual_cost": 10500000,
+      "variable_cost_per_master_m": 24.0,
+      "evidence": "E"
+    },
+    {
+      "name": "oxygenation_and_silver",
+      "nominal_web_speed_m_per_hour": 125,
+      "parallel_lines": 1,
+      "availability": 0.88,
+      "performance_rate": 0.9,
+      "independent_retention": 0.99,
+      "fixed_annual_cost": 2300000,
+      "variable_cost_per_master_m": 8.0,
+      "evidence": "E"
+    },
+    {
+      "name": "stabilization_slitting_and_qc",
+      "nominal_web_speed_m_per_hour": 110,
+      "parallel_lines": 1,
+      "availability": 0.86,
+      "performance_rate": 0.88,
+      "independent_retention": 0.96,
+      "fixed_annual_cost": 3800000,
+      "variable_cost_per_master_m": 15.0,
+      "evidence": "E"
+    }
+  ],
+  "defects": {
+    "common_mode_defects_per_master_km": 0.4,
+    "lane_defects_per_lane_km": 0.8,
+    "excluded_length_per_defect_m": 1.0,
+    "minimum_shippable_piece_m": 100,
+    "evidence": "E; Poisson teaching assumption"
+  },
+  "grades": [
+    {
+      "name": "high_field_premium",
+      "share": 0.3,
+      "counts_as_qualified_output": true,
+      "ic_a_at_reference": 500,
+      "evidence": "E"
+    },
+    {
+      "name": "high_field_standard",
+      "share": 0.5,
+      "counts_as_qualified_output": true,
+      "ic_a_at_reference": 350,
+      "evidence": "E"
+    },
+    {
+      "name": "downgraded_saleable",
+      "share": 0.2,
+      "counts_as_qualified_output": false,
+      "ic_a_at_reference": 220,
+      "evidence": "E"
+    }
+  ]
+}

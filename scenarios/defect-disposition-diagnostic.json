@@ -1,0 +1,14 @@
+{
+  "name": "synthetic oxygenation-response disposition diagnostic",
+  "route_label": "generic coated-conductor route; not MetOx or any producer",
+  "evidence_boundary": "All probabilities and costs are synthetic training assumptions. The confirmation action assumes perfect defect-class resolution and is an information-value upper bound, not a validated inspection method.",
+  "inputs": {
+    "recoverable_prevalence": 0.45,
+    "response_sensitivity": 0.8,
+    "response_specificity": 0.9,
+    "repair_success_if_recoverable": 0.75,
+    "rework_cost": 0.18,
+    "scrap_cost": 1.0,
+    "confirmation_cost": 0.10
+  }
+}

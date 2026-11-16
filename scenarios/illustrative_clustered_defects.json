@@ -1,0 +1,14 @@
+{
+  "master_length_m": 1000,
+  "slit_lanes": 3,
+  "common_mode_defects_per_master_km": 0.4,
+  "lane_defects_per_lane_km": 0.8,
+  "excluded_length_per_defect_m": 1.0,
+  "minimum_shippable_piece_m": 100,
+  "replications": 5000,
+  "defect_model": "clustered",
+  "mean_children_per_cluster": 4,
+  "cluster_sigma_m": 10,
+  "seed": 20260902,
+  "evidence_notice": "Every input is an E-class synthetic teaching assumption; this is not MetOx or vendor yield data."
+}
