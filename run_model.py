@@ -23,6 +23,8 @@ def _render_markdown(result: dict[str, Any]) -> str:
         "",
         f"> {result['evidence_notice']}",
         "",
+        f"Model boundary: {result['model_boundary']}",
+        "",
         "## Headline outputs",
         "",
         "| Metric | Result |",

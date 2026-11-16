@@ -26,3 +26,12 @@ class ReleaseRegressionTest(unittest.TestCase):
         cfg = json.loads((ROOT/'scenarios/illustrative_baseline.json').read_text())
         cfg['defects']['minimum_shippable_piece_m'] = 1e9
         with self.assertRaisesRegex(ModelInputError, 'zero output'): run_factory(cfg)
+
+    def test_tiny_poisson_mean_never_returns_negative_count(self):
+        self.assertEqual(_poisson_count(1e-20, random.Random(0)), 0)
+
+    def test_markdown_report_includes_model_boundary(self):
+        from run_model import _render_markdown
+        cfg = json.loads((ROOT / 'scenarios/illustrative_baseline.json').read_text())
+        result = run_factory(cfg)
+        self.assertIn(result['model_boundary'], _render_markdown(result))

@@ -20,10 +20,12 @@ def _poisson_count(mean: float, rng: random.Random) -> int:
     limit = math.exp(-mean)
     product = 1.0
     count = 0
-    while product > limit:
+    # Draw at least once: exp(-mean) can round to 1 for tiny positive means.
+    while True:
         count += 1
         product *= rng.random()
-    return count - 1
+        if product <= limit:
+            return count - 1
 
 
 def _poisson_points(rate_per_km: float, length_m: float, rng: random.Random) -> list[float]:
