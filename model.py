@@ -247,7 +247,8 @@ def run_factory(config: dict[str, Any]) -> dict[str, Any]:
     result: dict[str, Any] = {
         "scenario_name": config.get("scenario_name", "unnamed"),
         "reference_condition": config["reference_condition"],
-        "model_boundary": "Steady-state common-throughput proxy: retention applied after the minimum step capacity; all steps incur variable cost on gross master metres. No serial scrap capacity recovery, queuing, ramp, inventory, capex or finance. Poisson piece formula is an infinite-length expectation, not a finite-roll forecast.",
+        "model_boundary": "Steady-state common-throughput proxy: retention applied after the minimum step capacity; all steps incur variable cost on gross master metres; downstream variable cost is charged on gross slit tape metres before process and piece retention. No serial scrap capacity recovery, queuing, ramp, inventory, capex or finance. Poisson piece formula is an infinite-length expectation, not a finite-roll forecast.",
+        "cost_allocation_basis": "Headline manufacturing_cost_per_kam assigns all cost to qualified kA·m. Per-grade allocated_manufacturing_cost_per_kam spreads cost uniformly over all saleable metres (including downgraded grades), then divides by that grade's Ic in kA. These are different allocation bases, not additive costs.",
         "bottleneck_step": bottleneck["name"],
         "gross_master_m_per_year": gross_master_m,
         "gross_slit_tape_m_per_year": gross_slit_tape_m,
@@ -277,5 +278,5 @@ def run_factory(config: dict[str, Any]) -> dict[str, Any]:
         result["annual_revenue"] = total_revenue
         result["gross_margin_before_unmodeled_costs"] = (
             total_revenue - annual_cost
-        ) / total_revenue if total_revenue else 0.0
+        ) / total_revenue if total_revenue else None
     return result

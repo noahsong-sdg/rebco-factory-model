@@ -1,5 +1,7 @@
-import unittest, random, copy, json, math
+import unittest, random, copy, json, math, sys
 from pathlib import Path
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 from defect_simulation import retained_fraction, _poisson_count
 from defect_disposition import DispositionInputs
 from ramp_economics import run_ramp
@@ -18,12 +20,12 @@ class ReleaseRegressionTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 DispositionInputs(.5,.8,.8,.9,bad,1,1).validate()
     def test_fractional_or_boolean_year_is_rejected(self):
-        cfg = json.loads((ROOT/'scenarios/ramp-cash-diagnostic.json').read_text())
+        cfg = json.loads((ROOT/'scenarios/ramp-cash-diagnostic.json').read_text(encoding="utf-8"))
         for bad in (1.9, True):
             cfg['years'][0]['year'] = bad
             with self.assertRaises(ModelInputError): run_ramp(cfg)
     def test_zero_yield_underflow_has_clear_error(self):
-        cfg = json.loads((ROOT/'scenarios/illustrative_baseline.json').read_text())
+        cfg = json.loads((ROOT/'scenarios/illustrative_baseline.json').read_text(encoding="utf-8"))
         cfg['defects']['minimum_shippable_piece_m'] = 1e9
         with self.assertRaisesRegex(ModelInputError, 'zero output'): run_factory(cfg)
 
@@ -32,6 +34,6 @@ class ReleaseRegressionTest(unittest.TestCase):
 
     def test_markdown_report_includes_model_boundary(self):
         from run_model import _render_markdown
-        cfg = json.loads((ROOT / 'scenarios/illustrative_baseline.json').read_text())
+        cfg = json.loads((ROOT / 'scenarios/illustrative_baseline.json').read_text(encoding="utf-8"))
         result = run_factory(cfg)
         self.assertIn(result['model_boundary'], _render_markdown(result))

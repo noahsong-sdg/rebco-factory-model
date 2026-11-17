@@ -17,7 +17,7 @@ def sweep(base: DispositionInputs, confirmation_costs=(0.08, 0.10)) -> list[dict
     for confirmation_cost in confirmation_costs:
         for response_detected in (False, True):
             for step in range(1, 20):
-                prevalence = step * 0.05
+                prevalence = step / 20
                 values = asdict(base)
                 values.update(recoverable_prevalence=prevalence, confirmation_cost=confirmation_cost)
                 result = decide(DispositionInputs(**values), response_detected)
@@ -78,6 +78,7 @@ def main() -> None:
         writer = csv.DictWriter(target, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
+    args.svg_out.parent.mkdir(parents=True, exist_ok=True)
     args.svg_out.write_text(render_svg(rows), encoding="utf-8")
 
 

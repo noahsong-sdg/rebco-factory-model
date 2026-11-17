@@ -42,7 +42,7 @@ def _render_markdown(result: dict[str, Any]) -> str:
         f"| Annual manufacturing cost | {_money(result['annual_manufacturing_cost'])} |",
         f"| Manufacturing cost / qualified m | {_money(result['manufacturing_cost_per_qualified_m'])} |",
         f"| Qualified kA·m | {result['qualified_kam_per_year']:,.0f} kA·m/year |",
-        f"| Manufacturing cost / kA·m | {_money(result['manufacturing_cost_per_kam'])} |",
+        f"| Manufacturing cost / qualified kA·m | {_money(result['manufacturing_cost_per_kam'])} |",
         "",
         "## Step capacities",
         "",
@@ -59,6 +59,8 @@ def _render_markdown(result: dict[str, Any]) -> str:
             "",
             "## Grade outputs",
             "",
+            result["cost_allocation_basis"],
+            "",
             "| Grade | Length | Qualified? | Ic at reference | Allocated manufacturing cost / kA·m |",
             "|---|---:|---:|---:|---:|",
         ]
@@ -70,6 +72,12 @@ def _render_markdown(result: dict[str, Any]) -> str:
             f"{grade['ic_a_at_reference']:,.0f} A | "
             f"{_money(grade['allocated_manufacturing_cost_per_kam'])} |"
         )
+    if "annual_revenue" in result:
+        margin = result["gross_margin_before_unmodeled_costs"]
+        margin_text = "undefined (zero revenue)" if margin is None else f"{margin:.2%}"
+        lines.extend(["", "## Revenue", "",
+                      f"- Annual revenue: {_money(result['annual_revenue'])}",
+                      f"- Gross margin before unmodeled costs: {margin_text}"])
     lines.extend(
         [
             "",
